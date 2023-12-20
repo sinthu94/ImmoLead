@@ -202,6 +202,8 @@ See example [here](https://example.crm.refine.dev/).
 
 ![Example](preview.png)
 
+Another example: [Minimal Dashboard](https://minimals.cc/dashboard)
+
 ### Header
 
 The header of the application provides a consistent top-level navigation and branding:
@@ -318,3 +320,67 @@ not applicable right now
 ### Black
 - **CMYK**: 10, 0, 0, 100
 - **HEX**: #00000a
+
+
+## Future Development: Real Estate Section
+
+### Overview
+
+We are planning to introduce a new section dedicated to real estate in our application. This section will display current property listings and will integrate with our CRM for real estate, FlowFact.
+
+### Integration with FlowFact
+
+- **Website**: [FlowFact](https://www.flowfact.de/)
+- **Purpose**: To fetch and display real estate listings.
+- **Implementation**: Integration will involve connecting to the FlowFact API to retrieve property data.
+
+### Mockup Creation
+
+- **Objective**: Design a mockup for the real estate view within our application.
+- **Content**: The mockup will include sample images and data to represent actual property listings.
+- **Inspiration Source**: Our current listings at [Rosenstein Immobilien](https://rosenstein.immobilien/angebote). The mockup will aim to reflect the style and content of these listings.
+
+### Note on Development
+
+- This section is planned for future development and is not part of the initial project scope.
+- The implementation of this feature will be inactive in the initial release but is considered for subsequent updates.
+- The mockup is intended to provide a visual and functional representation of how the real estate section will integrate and display in the application.
+- Please add the boilerplate code to fetch the estates informations as well.
+- [FlowFact API Doc](https://developers.flowfact.com/api)
+
+### Architecture Adjustment
+
+The architecture will change accordingly with [FlowFact](https://www.flowfact.de/) to:
+
+- **Frontend:** React.js - [Refine Dev](https://refine.dev/)
+- **Backend:** Node.js [Express](https://expressjs.com)
+- **Lead-CRM:** [HubSpot](https://www.hubspot.de/)
+- **RealEstate-CRM:** [Flowfact](https://www.flowfact.de)
+- **Auth** [0Auth](https://auth0.com/)
+
+```mermaid
+sequenceDiagram
+participant Frontend
+participant 0Auth
+participant Backend
+participant HubSpot
+participant Flowfact
+
+
+Frontend->>0Auth: Authentication (0Auth)
+0Auth-->>Frontend: Authentication Token
+Frontend->>Backend: REST API Calls with JWT
+Backend->>0Auth: JWT Validation (Public Key)
+0Auth-->>Backend: Confirmation of Validity
+Backend->>HubSpot: API Calls based on Customer Requirements
+HubSpot-->>Backend: Response
+Backend->>Frontend: Processed Data Display
+
+Frontend->>Backend: REST API Calls with JWT
+Backend->>0Auth: JWT Validation (Public Key)
+0Auth-->>Backend: Confirmation of Validity
+Backend->>Flowfact: API Calls to fetch RealEstates
+Flowfact-->>Backend: Response
+Backend->>Frontend: Processed Data Display
+
+```
